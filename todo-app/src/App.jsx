@@ -1,8 +1,8 @@
 import React from 'react'
-import Title from './components/Title/Title'
-import ToDo from './components/Todo/ToDo'
-import ToDoInput from './components/TodoInput/ToDoInput'
-import ToDoList from './components/TodoList/ToDoList'
+import {Title} from './components/Title/Title'
+import {ToDo} from './components/Todo/Todo'
+import {ToDoInput} from './components/TodoInput/ToDoInput'
+import {ToDoList} from './components/TodoList/ToDoList'
 
 
 const App = () => {
