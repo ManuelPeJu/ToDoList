@@ -19,4 +19,4 @@ const ToDoFilters = () => {
   )
 }
  
-export default ToDoFilters
+export { ToDoFilters }
