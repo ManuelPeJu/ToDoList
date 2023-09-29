@@ -16,7 +16,25 @@ const ItemsLeft = ({ total = 0 }) => {
     )
 }
 
-export {FilterContainer, ItemsLeft};
+const FilterButtonContainer = ({children}) => {
+  return (
+    <div className='flex items-center space-x-2'>
+      {children}
+    </div>
+  )
+}
+
+const FilterButton = ({ action, active, filter }) => {
+  return (
+    <button onClick={action}
+      className={`hover:text-white cursor-pointer transition-all duration-300 ease-in-out ` + (active ? "text-blue-400" : "text-gray-400")}
+    >
+      {filter}
+    </button>
+  )
+}
+
+export {FilterContainer, ItemsLeft, FilterButtonContainer, FilterButton};
 
 
 //en este componente vamos a subdividir los filtros en pequeños componentes
