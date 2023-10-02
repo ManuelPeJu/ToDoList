@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
 import {Title} from './components/Title/Title'
-import {ToDo} from './components/Todo/Todo'
 import {ToDoInput} from './components/TodoInput/ToDoInput'
 import {ToDoList} from './components/TodoList/ToDoList'
 
@@ -43,15 +42,39 @@ const App = () => {
 
     const todoList = [...todos]
     todoList.push(newTodo);
+
     setTodos(todoList);
+    console.log("lo agregué")
+    console.log(lastId)
+    console.log(todoList)
   }
 
+  const handleSetComplete = (id) => {
+
+    const updatedList = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: true}
+      }
+      return todo;
+    })
+
+    setTodos(updatedList);
+    // console.log(updatedList)
+  } 
+
+   const handleDelete = (id) => {
+    const updatedList = todos.filter(todo => todo.id !== id);
+    setTodos(updatedList);
+    console.log("Lo borré")
+    console.log(id)
+  }
+ 
   return (
     <div className="bg-gray-900 min-h-screen h-full w-full font-inter text-gray-100 flex items-center justify-center py-20 px-5 ">
       <div className='container flex flex-col max-w-xl'>
         <Title/>
         <ToDoInput addTodo={addTodo} />
-        <ToDoList todos={todos} />
+        <ToDoList todos={todos} handleSetComplete={handleSetComplete} handleDelete={handleDelete} />
          
       </div>
     </div>
