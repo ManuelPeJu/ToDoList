@@ -2,7 +2,7 @@ import React from 'react'
 import { ToDo } from '../Todo/Todo'
 import {ToDoFilters} from '../TodoFilters/ToDoFilters'
 
-const ToDoList = ({ todos, handleSetComplete, handleDelete }) => {
+const ToDoList = ({ todos, handleSetComplete, handleDelete, activeFilter, showAllTodos, showActiveTodos, showCompletedTodos, handleClearComplete}) => {
 
   // console.log(todos)
   // console.log(handleSetComplete)
@@ -14,7 +14,14 @@ const ToDoList = ({ todos, handleSetComplete, handleDelete }) => {
             <ToDo key={todo.id} todo={todo} handleSetComplete={handleSetComplete} handleDelete={handleDelete} />
           )
         })}
-        <ToDoFilters />
+        <ToDoFilters 
+          activeFilter={activeFilter}
+          total={todos.length}
+          showAllTodos={showAllTodos}
+          showActiveTodos={showActiveTodos}
+          showCompletedTodos={showCompletedTodos}
+          handleClearComplete={handleClearComplete}
+        />
     </div>
   )
 }

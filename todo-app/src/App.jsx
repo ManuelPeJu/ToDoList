@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {Title} from './components/Title/Title'
 import {ToDoInput} from './components/TodoInput/ToDoInput'
 import {ToDoList} from './components/TodoList/ToDoList'
@@ -31,6 +31,9 @@ const App = () => {
   ])
 
 
+  const [activeFilter, setActiveFilter] = useState("all")
+  const [filteredTodo, setFilteredTodos] = useState(todos)
+
   const addTodo = (title) => {
     const lastId = todos.length > 0 ? todos[todos.length - 1].id : 1;
 
@@ -44,9 +47,6 @@ const App = () => {
     todoList.push(newTodo);
 
     setTodos(todoList);
-    console.log("lo agregué")
-    console.log(lastId)
-    console.log(todoList)
   }
 
   const handleSetComplete = (id) => {
@@ -59,22 +59,59 @@ const App = () => {
     })
 
     setTodos(updatedList);
-    // console.log(updatedList)
   } 
 
    const handleDelete = (id) => {
     const updatedList = todos.filter(todo => todo.id !== id);
     setTodos(updatedList);
-    console.log("Lo borré")
-    console.log(id)
   }
- 
+
+  const handleClearComplete = () => {
+    const updatedList = todos.filter(todo => !todo.completed);
+    setTodos(updatedList);
+  };
+
+  const showAllTodos = () => {
+    setActiveFilter('all')
+  }
+
+  const showActiveTodos = () => {
+    setActiveFilter('active')
+  }
+
+  const showCompletedTodos = () => {
+    setActiveFilter('completed')
+  }
+
+  useEffect(() => {
+    if (activeFilter === 'all') {
+      setFilteredTodos(todos);
+    } else if (activeFilter === 'active') {
+        const activeTodos = todos.filter(todo => todo.completed === false);
+        setFilteredTodos(activeTodos);
+    } else if (activeFilter === 'completed') {
+        const completedTodos = todos.filter(todo => todo.completed === true);
+        setFilteredTodos(completedTodos);
+    }
+
+    
+  },[activeFilter, todos]);
+
   return (
     <div className="bg-gray-900 min-h-screen h-full w-full font-inter text-gray-100 flex items-center justify-center py-20 px-5 ">
       <div className='container flex flex-col max-w-xl'>
         <Title/>
         <ToDoInput addTodo={addTodo} />
-        <ToDoList todos={todos} handleSetComplete={handleSetComplete} handleDelete={handleDelete} />
+        <ToDoList 
+          activeFilter={activeFilter} 
+          todos={filteredTodo}
+          handleSetComplete={handleSetComplete} 
+          handleDelete={handleDelete}
+          showAllTodos={showAllTodos}
+          showActiveTodos={showActiveTodos}
+          showCompletedTodos={showCompletedTodos}
+          handleClearComplete={handleClearComplete}
+          />
          
       </div>
     </div>
